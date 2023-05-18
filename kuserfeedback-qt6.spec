@@ -69,8 +69,10 @@ Header files for development with %{name}.
 
 %prep
 %autosetup -p1 -n kuserfeedback-%{version}
+# BUILD_TESTING drags in a Qt5 dep
 %cmake \
 	-DBUILD_WITH_QT6:BOOL=ON \
+	-DBUILD_TESTING:BOOL=OFF \
 	-DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON \
 	-G Ninja
 

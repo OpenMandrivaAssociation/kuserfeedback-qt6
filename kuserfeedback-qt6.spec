@@ -30,6 +30,8 @@ BuildRequires:	cmake(Qt6Help)
 BuildRequires:	cmake(Qt6GuiTools)
 BuildRequires:	bison
 BuildRequires:	flex
+# For qcollectiongenerator, qch creation
+BuildRequires:	qt5-qttools
 
 %description
 Framework for collecting user feedback for applications via telemetry
@@ -78,7 +80,6 @@ Header files for development with %{name}.
 %autosetup -p1 -n kuserfeedback-%{version}
 # BUILD_TESTING drags in a Qt5 dep
 %cmake \
-	--debug-find \
 	-DBUILD_WITH_QT6:BOOL=ON \
 	-DBUILD_TESTING:BOOL=OFF \
 	-DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON \

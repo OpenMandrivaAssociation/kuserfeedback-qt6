@@ -21,6 +21,11 @@ BuildRequires:	cmake(Qt6Sql)
 BuildRequires:	cmake(Qt6Svg)
 BuildRequires:	cmake(Qt6Test)
 BuildRequires:	cmake(Qt6Widgets)
+BuildRequires:  cmake(Qt6Charts)
+BuildRequires:	cmake(Qt6Svg)
+BuildRequires:	cmake(Qt6PrintSupport)
+BuildRequires:	cmake(Qt6Help)
+BuildRequires:	cmake(Qt6GuiTools)
 BuildRequires:	bison
 BuildRequires:	flex
 

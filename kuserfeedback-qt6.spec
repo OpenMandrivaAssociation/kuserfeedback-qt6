@@ -1,11 +1,17 @@
+%define git 20230518
+
 Name:		kuserfeedback-qt6
-Version:	1.2.0
-Release:	1
+Version:	1.2.1
+Release:	%{?git:0.%{git}.}1
 Summary:	Framework for collecting user feedback for applications via telemetry and surveys
 License:	GPLv2+
 Group:		Development/KDE and Qt
 Url:		https://invent.kde.org/libraries/kuserfeedback
+%if 0%{!?git:1}
 Source0:	https://download.kde.org/stable/kuserfeedback/kuserfeedback-%{version}.tar.xz
+%else
+Source0:	https://invent.kde.org/libraries/kuserfeedback/-/archive/master/kuserfeedback-master.tar.bz2#/kuserfeedback-%{git}.tar.bz2
+%endif
 BuildRequires:	cmake(ECM)
 BuildRequires:	cmake(Qt6)
 BuildRequires:	cmake(Qt6ToolsTools)
@@ -39,8 +45,8 @@ and surveys.
 %{_datadir}/qlogging-categories6/org_kde_UserFeedback.categories
 %{_bindir}/userfeedbackctl
 %{_datadir}/locale/*/LC_MESSAGES/userfeedbackprovider5_qt.qm
-%{_libdir}/libKUserFeedbackCore.so*
-%{_libdir}/libKUserFeedbackWidgets.so*
+%{_libdir}/libKUserFeedbackCoreQt6.so*
+%{_libdir}/libKUserFeedbackWidgetsQt6.so*
 %{_qtdir}/qml/org/kde/userfeedback
 
 %package console
@@ -65,19 +71,15 @@ Requires:	%{name} >= %{EVRD}
 Header files for development with %{name}.
 
 %files devel
-%{_includedir}/KUserFeedback/
-%{_libdir}/libKUserFeedbackCore.so
-%{_libdir}/libKUserFeedbackWidgets.so
-%{_libdir}/cmake/KUserFeedback/
-%{_qtdir}/mkspecs/modules/qt_KUserFeedbackCore.pri
-%{_qtdir}/mkspecs/modules/qt_KUserFeedbackWidgets.pri
+%{_includedir}/KUserFeedbackQt6/
+%{_libdir}/cmake/KUserFeedbackQt6/
+%{_qtdir}/mkspecs/modules/qt_KUserFeedbackCoreQt6.pri
+%{_qtdir}/mkspecs/modules/qt_KUserFeedbackWidgetsQt6.pri
 
 %prep
-%autosetup -p1 -n kuserfeedback-%{version}
-# BUILD_TESTING drags in a Qt5 dep
+%autosetup -p1 -n kuserfeedback-%{?git:master}%{!?git:%{version}}
 %cmake \
 	-DBUILD_WITH_QT6:BOOL=ON \
-	-DBUILD_TESTING:BOOL=OFF \
 	-DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON \
 	-G Ninja
 

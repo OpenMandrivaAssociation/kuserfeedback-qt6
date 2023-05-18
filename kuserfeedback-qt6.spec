@@ -30,8 +30,6 @@ BuildRequires:	cmake(Qt6Help)
 BuildRequires:	cmake(Qt6GuiTools)
 BuildRequires:	bison
 BuildRequires:	flex
-# For qcollectiongenerator, qch creation
-BuildRequires:	qt5-qttools
 
 %description
 Framework for collecting user feedback for applications via telemetry
@@ -56,8 +54,6 @@ Application for viewing feedback collected by kuserfeedback.
 %{_bindir}/UserFeedbackConsole
 %{_datadir}/applications/org.kde.kuserfeedback-console.desktop
 %{_datadir}/metainfo/org.kde.kuserfeedback-console.appdata.xml
-%dir %{_datadir}/KDE/UserFeedbackConsole
-%{_datadir}/KDE/UserFeedbackConsole/*.qch
 %{_datadir}/locale/*/LC_MESSAGES/userfeedbackconsole5_qt.qm
 
 %package devel

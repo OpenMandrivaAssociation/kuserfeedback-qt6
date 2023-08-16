@@ -1,4 +1,4 @@
-%define git 20230518
+%define git 20230816
 
 Name:		kuserfeedback-qt6
 Version:	1.2.1
@@ -36,15 +36,27 @@ BuildRequires:	cmake(Qt6Help)
 BuildRequires:	cmake(Qt6GuiTools)
 BuildRequires:	bison
 BuildRequires:	flex
+Suggests:	kuserfeedback-translations = %{EVRD}
 
 %description
 Framework for collecting user feedback for applications via telemetry
 and surveys.
 
+# The translations are split out so they can be shared between the
+# qt5 and qt6 versions of the package.
+# This can be merged back into the main package once we drop KF5
+%package -n kuserfeedback-translations
+Summary:	Translations of kuserfeedback
+Group:		Graphical desktop/KDE
+
+%description -n kuserfeedback-translations
+Translations of kuserfeedback
+
+%files -n kuserfeedback-translations -f %{name}.lang
+
 %files
 %{_datadir}/qlogging-categories6/org_kde_UserFeedback.categories
 %{_bindir}/userfeedbackctl
-%{_datadir}/locale/*/LC_MESSAGES/userfeedbackprovider5_qt.qm
 %{_libdir}/libKUserFeedbackCoreQt6.so*
 %{_libdir}/libKUserFeedbackWidgetsQt6.so*
 %{_qtdir}/qml/org/kde/userfeedback
@@ -60,7 +72,6 @@ Application for viewing feedback collected by kuserfeedback.
 %{_bindir}/UserFeedbackConsole
 %{_datadir}/applications/org.kde.kuserfeedback-console.desktop
 %{_datadir}/metainfo/org.kde.kuserfeedback-console.appdata.xml
-%{_datadir}/locale/*/LC_MESSAGES/userfeedbackconsole5_qt.qm
 
 %package devel
 Summary:	Development package for %{name}
@@ -75,6 +86,9 @@ Header files for development with %{name}.
 %{_libdir}/cmake/KUserFeedbackQt6/
 %{_qtdir}/mkspecs/modules/qt_KUserFeedbackCoreQt6.pri
 %{_qtdir}/mkspecs/modules/qt_KUserFeedbackWidgetsQt6.pri
+%dir %{_datadir}/KDE
+%dir %{_datadir}/KDE/UserFeedbackConsole
+%{_datadir}/KDE/UserFeedbackConsole/*.qch
 
 %prep
 %autosetup -p1 -n kuserfeedback-%{?git:master}%{!?git:%{version}}
@@ -87,4 +101,10 @@ Header files for development with %{name}.
 %ninja_build -C build
 
 %install
+D="$(pwd)"
 %ninja_install -C build
+
+cd %{buildroot}%{_datadir}/locale
+for i in */LC_MESSAGES/*; do
+	echo "%%lang($(echo $i |cut -d/ -f1)) %%{_datadir}/locale/$i" >>"$D"/%{name}.lang
+done

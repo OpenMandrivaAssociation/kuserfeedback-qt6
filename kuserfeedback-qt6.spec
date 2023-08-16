@@ -86,9 +86,9 @@ Header files for development with %{name}.
 %{_libdir}/cmake/KUserFeedbackQt6/
 %{_qtdir}/mkspecs/modules/qt_KUserFeedbackCoreQt6.pri
 %{_qtdir}/mkspecs/modules/qt_KUserFeedbackWidgetsQt6.pri
-%dir %{_datadir}/KDE
-%dir %{_datadir}/KDE/UserFeedbackConsole
-%{_datadir}/KDE/UserFeedbackConsole/*.qch
+%optional %dir %{_datadir}/KDE
+%optional %dir %{_datadir}/KDE/UserFeedbackConsole
+%optional %{_datadir}/KDE/UserFeedbackConsole/*.qch
 
 %prep
 %autosetup -p1 -n kuserfeedback-%{?git:master}%{!?git:%{version}}

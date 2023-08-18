@@ -1,4 +1,8 @@
-%define git 20230816
+%define git 20230818
+
+%define libname %mklibname KUserFeedbackCoreQt6
+%define wlibname %mklibname KUserFeedbackWidgetsQt6
+%define devname %mklibname -d KUserFeedbackCoreQt6
 
 Name:		kuserfeedback-qt6
 Version:	1.2.1
@@ -57,9 +61,27 @@ Translations of kuserfeedback
 %files
 %{_datadir}/qlogging-categories6/org_kde_UserFeedback.categories
 %{_bindir}/userfeedbackctl
-%{_libdir}/libKUserFeedbackCoreQt6.so*
-%{_libdir}/libKUserFeedbackWidgetsQt6.so*
 %{_qtdir}/qml/org/kde/userfeedback
+
+%package -n %{libname}
+Summary:	Core library for collecting and parsing user feedback
+Group:		System/Libraries
+
+%description -n %{libname}
+Core library for collecting and parsing user feedback
+
+%files -n %{libname}
+%{_libdir}/libKUserFeedbackCoreQt6.so*
+
+%package -n %{wlibname}
+Summary:	Widget library for collecting and parsing user feedback
+Group:		System/Libraries
+
+%description -n %{wlibname}
+Widget library for collecting and parsing user feedback
+
+%files -n %{wlibname}
+%{_libdir}/libKUserFeedbackWidgetsQt6.so*
 
 %package console
 Summary:	Application for viewing feedback collected by kuserfeedback
@@ -73,15 +95,17 @@ Application for viewing feedback collected by kuserfeedback.
 %{_datadir}/applications/org.kde.kuserfeedback-console.desktop
 %{_datadir}/metainfo/org.kde.kuserfeedback-console.appdata.xml
 
-%package devel
+%package -n %{devname}
 Summary:	Development package for %{name}
 Group:		Development/KDE and Qt
-Requires:	%{name} >= %{EVRD}
+Requires:	%{libname} >= %{EVRD}
+Requires:	%{wlibname} >= %{EVRD}
+%rename %{name}-devel
 
-%description devel
+%description -n %{devname}
 Header files for development with %{name}.
 
-%files devel
+%files -n %{devname}
 %{_includedir}/KUserFeedbackQt6/
 %{_libdir}/cmake/KUserFeedbackQt6/
 %{_qtdir}/mkspecs/modules/qt_KUserFeedbackCoreQt6.pri

@@ -6,7 +6,7 @@
 
 Name:		kuserfeedback-qt6
 Version:	1.2.1
-Release:	%{?git:0.%{git}.}1
+Release:	%{?git:0.%{git}.}2
 Summary:	Framework for collecting user feedback for applications via telemetry and surveys
 License:	GPLv2+
 Group:		Development/KDE and Qt
